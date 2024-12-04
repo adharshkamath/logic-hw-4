@@ -1,0 +1,609 @@
+\documentclass[12pt,letterpaper, onecolumn]{exam}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\usepackage{graphicx}
+\newcommand{\link}[1]{{\color{blue}\href{#1}{#1}}}
+\usepackage{pythonhighlight}
+\usepackage[a4paper,lmargin=30pt, rmargin=50pt, tmargin=0.65in]{geometry}  %For centering solution box
+% \chead{\hline} % Un-comment to draw line below header
+\thispagestyle{empty}   %For removing header/footer from page 1
+
+\begin{document}
+
+\begingroup
+\centering
+\LARGE CS 474\\
+\large Homework 3 \\[0.5em]
+\endgroup
+\begingroup
+\normalsize \quad\quad\quad Name: Adharsh Kamath \quad\quad\quad \quad\quad\quad \quad\quad\quad \quad\quad\quad \quad  NetID: ak128 \par\
+\endgroup
+\rule{17cm}{0.4pt}
+\pointsdroppedatright   %Self-explanatory
+\printanswers
+\renewcommand{\solutiontitle}{\noindent\textbf{Soln:}\enspace}
+\newcommand{\cheading}[1]{{\underline{\textit{#1}}}}
+
+\renewcommand{\questionshook}{%
+	\setlength{\leftmargin}{18pt}%
+	\setlength{\labelwidth}{-\labelsep}%
+}
+\qformat{\underline{Problem \thequestion}}
+\begin{questions}
+	\question[]
+	\solutiontitle
+	We are given three models with signatures $ (\text{U}, 0, 1, +, *) $ where $ \text{U} $ is $\mathbb{N}$, $\mathbb{Q}$ and $\mathbb{R}$.
+
+	\textbf{(a)} \\
+	For each formula given below, we shall see if the formula is true or false over $\mathbb{N}$, $\mathbb{Q}$ and $\mathbb{R}$. \\ \\
+	1. $ \exists y. ( y * y = 1 + 1 ) $ \\ \\
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		$\mathbb{N}$ & $\mathbb{Q}$ & $\mathbb{R}$ \\
+		\hline
+		False & False & True \\
+		\hline
+	\end{tabular} \\ \\
+	This formula is true over $\mathbb{R}$ since there is a real number ($ \sqrt{2} $) which satisfies the formula. However, the same is not true
+	for $\mathbb{N}$ and $\mathbb{Q}$. \\
+
+	2. $ \forall x. \exists y. (x + y = 0) $ \\ \\
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		$\mathbb{N}$ & $\mathbb{Q}$ & $\mathbb{R}$ \\
+		\hline
+		False & True & True \\
+		\hline
+	\end{tabular} \\ \\
+	This formula is true over $\mathbb{Q}$ and $\mathbb{R}$ since for any $x \in \mathbb{Q}$ (or $\mathbb{R}$), there exists a 
+	$y \in \mathbb{Q}$ (or $\mathbb{R}$) such that $x + y = 0$. (We can take $y = -x$ when $ x \neq 0 $ and $ y = 0 $ otherwise).
+	However, this is not true for $\mathbb{N}$ since there is no $y \in \mathbb{N}$ such that $x + y = 0$ for any $x \in \mathbb{N}$. \\
+
+	3. $ \forall x. \forall y. (\neg(y = 0) \Rightarrow (\exists z. x * y = x + z)) $ \\ \\
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		$\mathbb{N}$ & $\mathbb{Q}$ & $\mathbb{R}$ \\
+		\hline
+		True & True & True \\
+		\hline
+	\end{tabular} \\ \\
+	This formula is true over $\mathbb{N}$, $\mathbb{Q}$ and $\mathbb{R}$ since for any $x, y \in \mathbb{N}$ (or $\mathbb{Q}$ or $\mathbb{R}$),
+	we can find a $z \in \mathbb{N}$ (or $\mathbb{Q}$ or $\mathbb{R}$) such that $x * y = x + z$. (We can take $z = x * (y - 1)$, and still ensure
+	$ z \in \mathbb{N} $ (or $\mathbb{Q}$ or $\mathbb{R}$). This is possible since the premise of the implication is that $y \neq 0$). \\
+
+	4. $ \exists x. \exists y. (x + 1 = 0 \land y * y = x) $ \\ \\
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		$\mathbb{N}$ & $\mathbb{Q}$ & $\mathbb{R}$ \\
+		\hline
+		False & False & False \\
+		\hline
+	\end{tabular} \\ \\
+	This formula is false over $\mathbb{N}$, $\mathbb{Q}$ and $\mathbb{R}$ since there is no $x, y \in \mathbb{N}$ (or $\mathbb{Q}$ or $\mathbb{R}$)
+	such that $x + 1 = 0$ and $y * y = x$. This formula can evaluate to true only if $x = -1$ and $y = \pm \sqrt{-1}$, which is possible 
+	only in $\mathbb{C}$ (complex numbers) and not in $\mathbb{N}$, $\mathbb{Q}$ or $\mathbb{R}$. \\
+
+	\textbf{(b)} \\
+	Task 1: \\
+	We need to write a formula $ gt_{\mathbb{N}}(x, y) $ that is true precisely when $ x > y $ for any $ x, y \in \mathbb{N} $. \\
+	We can write the formula as $ gt_{\mathbb{N}}(x, y) = \exists z. (z \neq 0 \land x = y + z) $. \\
+
+	Task 2: \\
+	We need to write a formula $ gt_{\mathbb{R}}(x, y) $ that is true precisely when $ x > y $ for any $ x, y \in \mathbb{R} $. \\
+	We can write the formula as $ gt_{\mathbb{R}}(x, y) = \exists z. (z \neq 0 \land x = y + (z * z)) $. \\
+	
+	% Bonus Task: \\
+	% We need to write a formula $ gt_{\mathbb{Q}}(x, y) $ that is true precisely when $ x > y $ for any $ x, y \in \mathbb{Q} $. \\
+
+	\textbf{(c)} \\
+	We need to write a formula that is true over $\mathbb{N}$, but false over $\mathbb{R}$. \\
+	Using the definitions of $ gt_{\mathbb{N}}(x, y) $ and $ gt_{\mathbb{R}}(x, y) $ from above,
+	we can write the following formula:
+	\begin{align*}
+		\forall x. (x > 0 \lor x = 0)
+	\end{align*}
+	where $ x > 0 $ is $ gt_{\mathbb{N}}(x, 0) $ for $\mathbb{N}$ 
+	and $ x > 0 $ is $ gt_{\mathbb{R}}(x, 0) $ for $\mathbb{R}$.
+	This formula is true over $\mathbb{N}$ since for any $x \in \mathbb{N}$, $x$ is greater than or equal to $0$, which is not true for $\mathbb{R}$. \\
+	% We can write a formula that is false in $\mathbb{R}$ due to its density property since $\mathbb{N}$ is not dense. \\
+	% One such formula is $ \forall x. \forall y. ((x > y) \Rightarrow (\forall z. \: x = y + z \Rightarrow (z > 1 \lor z = 1))) $, \\ 
+	% where $ x > y \equiv gt_{\mathbb{N}}(x, y) $ for $\mathbb{N}$ and $ x > y \equiv gt_{\mathbb{R}}(x, y) $ for $\mathbb{R}$. \\
+
+    {\rule{17cm}{0.4pt}}
+	\question[]
+	\solutiontitle
+	\textbf{(a)} \\
+	Task 1: \\
+	We are given the following formula over the logic $ ( \mathbb{R}, 0, 1, < ) $: \\
+	\begin{align*}
+		\forall z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \\
+		\Rightarrow ( \exists w. \: l_1 < w \land w < u_1 \land l_2 < w \land w < u_2 \land w \neq z ) )
+	\end{align*}
+
+	Consider the inner formula that is quantified by $ \exists w $:
+	\begin{align*}
+		\exists w. ( l_1 < w \land w < u_1 \land l_2 < w \land w < u_2 \land w \neq z )
+	\end{align*}
+
+	Rewriting $ w \neq z $ as $ \neg (w = z) $, which is equivalent to $ w < z \lor w > z $, we get:
+	\begin{align*}
+		\exists w. ( l_1 < w \land w < u_1 \land l_2 < w \land w < u_2 \land (w < z \lor w > z) )
+	\end{align*}
+	Applying the distributive property and simplifying, we get the DNF form:
+	\begin{align*}
+		\exists w. ( l_1 < w \land w < u_1 \land l_2 < w \land w < u_2 \land w < z ) \\
+		\lor \exists w. ( l_1 < w \land w < u_1 \land l_2 < w \land w < u_2 \land w > z )
+	\end{align*}
+	Consider the first disjunct: 
+	\begin{align*}
+		\exists w. ( l_1 < w \land w < u_1 \land l_2 < w \land w < u_2 \land w < z )
+	\end{align*}
+	In the context of the Q.E procedure for DLOWE, the lower bounds in this case are $ l_1, l_2 $ and the upper bounds are $ u_1, u_2, z $.
+	Eliminating the existential quantifier, we get:
+	\begin{align*}
+		(l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land l_1 < z \land l_2 < z)
+	\end{align*}
+
+	Consider the second disjunct:
+	\begin{align*}
+		\exists w. ( l_1 < w \land w < u_1 \land l_2 < w \land w < u_2 \land w > z )
+	\end{align*}
+	In the context of the Q.E procedure for DLOWE, the lower bounds in this case are $ l_1, l_2, z $ and the upper bounds are $ u_1, u_2 $.
+	Eliminating the existential quantifier, we get:
+	\begin{align*}
+		(l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land z < u_1 \land z < u_2)
+	\end{align*}
+
+	Combining the two disjuncts, we get:
+	\begin{align*}
+		(l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land l_1 < z \land l_2 < z) \\
+		\lor (l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land z < u_1 \land z < u_2)
+	\end{align*}
+	Thus we have eliminated the existential quantifier $ \exists w $ from the original formula. \\
+
+	Therefore, the original formula can be simplified to:
+	\begin{align*}
+		\forall z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \\
+		\Rightarrow ((l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land l_1 < z \land l_2 < z) \\
+		\lor (l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land z < u_1 \land z < u_2)) )
+	\end{align*}
+
+	Rewriting the implication as a disjunction, we get:
+	\begin{align*}
+		\forall z. \neg ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 ) \\
+		\lor ((l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land l_1 < z \land l_2 < z) \\
+		\lor (l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land z < u_1 \land z < u_2))
+	\end{align*}
+
+	Rewriting the universal quantifier as an existential quantifier, and pushing the negation inside, we get:
+	\begin{align*}
+		\neg ( \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 ) ) \\
+		\land \neg ((l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land l_1 < z \land l_2 < z) \\
+		\lor (l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land z < u_1 \land z < u_2))
+	\end{align*}
+
+	Consider the inner existential formula:
+	\begin{align*}
+		\exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 ) \\
+		\land \neg ((l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land l_1 < z \land l_2 < z) \\
+		\lor (l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land z < u_1 \land z < u_2))
+	\end{align*}
+
+	Applying De Morgan's law, we get:
+	\begin{align*}
+		\exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 ) \\
+		\land (\neg (l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land l_1 < z \land l_2 < z) \\
+		\land \neg (l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land z < u_1 \land z < u_2))
+	\end{align*}
+
+	Consider the first inner negated formula:
+	\begin{align*}
+		\neg (l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land l_1 < z \land l_2 < z)
+	\end{align*}
+	Using De Morgan's law, we get:
+	\begin{align*}
+		(l_1 > u_1 \lor l_1 = u_1) \lor (l_2 > u_1 \lor l_2 = u_1) \lor (l_1 > u_2 \lor l_1 = u_2) \lor (l_2 > u_2 \lor l_2 = u_2) \\
+		\lor (l_1 > z \lor l_1 = z) \lor (l_2 > z \lor l_2 = z)
+	\end{align*}
+
+	Similarly for the other inner negated formula:
+	\begin{align*}
+		\neg (l_1 < u_1 \land l_2 < u_1 \land l_1 < u_2 \land l_2 < u_2 \land z < u_1 \land z < u_2)
+	\end{align*}
+	Applying De Morgan's law, we get:
+	\begin{align*}
+		(l_1 > u_1 \lor l_1 = u_1) \lor (l_2 > u_1 \lor l_2 = u_1) \lor (l_1 > u_2 \lor l_1 = u_2) \lor (l_2 > u_2 \lor l_2 = u_2) \\
+		\lor (z > u_1 \lor z = u_1) \lor (z > u_2 \lor z = u_2)
+	\end{align*}
+	The conjunction of the above two formulae is:
+	\begin{align*}
+		((l_1 > u_1 \lor l_1 = u_1) \lor (l_2 > u_1 \lor l_2 = u_1) \lor (l_1 > u_2 \lor l_1 = u_2) \lor (l_2 > u_2 \lor l_2 = u_2) \\
+		\lor (l_1 > z \lor l_1 = z) \lor (l_2 > z \lor l_2 = z)) \\
+		\land \\
+		((l_1 > u_1 \lor l_1 = u_1) \lor (l_2 > u_1 \lor l_2 = u_1) \lor (l_1 > u_2 \lor l_1 = u_2) \lor (l_2 > u_2 \lor l_2 = u_2) \\
+		\lor (z > u_1 \lor z = u_1) \lor (z > u_2 \lor z = u_2))
+	\end{align*}
+	Applying the distributive property and simplifying, we get:
+	\begin{align*}
+		(l_1 > u_1 \lor l_1 = u_1) \lor (l_2 > u_1 \lor l_2 = u_1) \lor (l_1 > u_2 \lor l_1 = u_2) \lor (l_2 > u_2 \lor l_2 = u_2) \\
+		\lor (( l_1 > z \lor l_1 = z) \land (z > u_1 \lor z = u_1)) \lor (( l_2 > z \lor l_2 = z) \land (z > u_1 \lor z = u_1)) \\
+		\lor (( l_1 > z \lor l_1 = z) \land (z > u_2 \lor z = u_2)) \lor (( l_2 > z \lor l_2 = z) \land (z > u_2 \lor z = u_2))
+	\end{align*}
+	(The term after applying distributive property and before simplification is omitted for brevity). \\
+	Putting the above back into the original formula, we get:
+	\begin{align*}
+		\exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 ) \\
+		\land (l_1 > u_1 \lor l_1 = u_1 \lor l_2 > u_1 \lor l_2 = u_1 \lor l_1 > u_2 \lor l_1 = u_2 \lor l_2 > u_2 \lor l_2 = u_2 \\
+		\lor (( l_1 > z \lor l_1 = z) \land (z > u_1 \lor z = u_1)) \lor (( l_2 > z \lor l_2 = z) \land (z > u_1 \lor z = u_1)) \\
+		\lor (( l_1 > z \lor l_1 = z) \land (z > u_2 \lor z = u_2)) \lor (( l_2 > z \lor l_2 = z) \land (z > u_2 \lor z = u_2)))
+	\end{align*}
+	Applying distributive property and simplifying, we get:
+	\begin{align*}
+		\exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 = u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 = u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 = u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 = u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land ( l_1 > z \lor l_1 = z) \land (z > u_1 \lor z = u_1) ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land ( l_2 > z \lor l_2 = z) \land (z > u_1 \lor z = u_1) ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land ( l_1 > z \lor l_1 = z) \land (z > u_2 \lor z = u_2) ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land ( l_2 > z \lor l_2 = z) \land (z > u_2 \lor z = u_2) )
+	\end{align*}
+
+	Simplifying the last four disjuncts, we get:
+	\begin{align*}
+		\exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 = u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 = u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 = u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 = u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > z \land z > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > z \land z > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > z \land z > u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > z \land z > u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > z \land z = u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 = z \land z > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 = z \land z = u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > z \land z = u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 = z \land z > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 = z \land z = u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > z \land z = u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 = z \land z > u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 = z \land z = u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > z \land z = u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 = z \land z > u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 = z \land z = u_2 )
+	\end{align*}
+
+	The following terms can be pulled out from the first eight disjuncts since they do not refer to $ z $:
+	\begin{align*}
+		(l_1 > u_1) \lor (l_1 = u_1) \lor (l_2 > u_1) \lor (l_2 = u_1) \lor (l_1 > u_2) \lor (l_1 = u_2) \lor (l_2 > u_2) \lor (l_2 = u_2)
+	\end{align*}
+
+	Upon removing the above terms, the first eight disjuncts all become the same:
+	\begin{align*}
+		\exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 )
+	\end{align*}
+	The existential can be eliminated using the Q.E procedure for DLOWE, and we get:
+	\begin{align*}
+		l_1 < u_1 \land l_1 < u_2 \land l_2 < u_1 \land l_2 < u_2
+	\end{align*}
+	Combining this formula with the terms that were pulled out, we get the simplified formula:
+	\begin{align*}
+		((l_1 > u_1 \lor l_1 = u_1) \lor (l_2 > u_1 \lor l_2 = u_1) \lor (l_1 > u_2 \lor l_1 = u_2) \lor (l_2 > u_2 \lor l_2 = u_2)) \\
+		\land (l_1 < u_1 \land l_1 < u_2 \land l_2 < u_1 \land l_2 < u_2)
+	\end{align*}
+
+	The next four disjuncts are:
+	\begin{align*}
+		\exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > z \land z > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > z \land z > u_1 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_1 > z \land z > u_2 ) \\
+		\lor \exists z. ( l_1 < z \land z < u_1 \land l_2 < z \land z < u_2 \land l_2 > z \land z > u_2 ) \\
+	\end{align*}
+	and they can be eliminated since they contain terms that are not satisfiable \\
+	(e.g. $ l_1 < z \land l_1 > z $ which cannot be satisfied). \\
+	The next twelve disjuncts contain terms of the form $ l_1 = z $ and also $ l_1 < z $ or $ l_1 > z $ which are not satisfiable together. \\
+	
+	Bringing back the outermost negation, we get the simplified formula:
+	\begin{align*}
+		\neg 
+		((l_1 > u_1 \lor l_1 = u_1) \lor (l_2 > u_1 \lor l_2 = u_1) \lor (l_1 > u_2 \lor l_1 = u_2) \lor (l_2 > u_2 \lor l_2 = u_2)) \\
+		\land (l_1 < u_1 \land l_1 < u_2 \land l_2 < u_1 \land l_2 < u_2)
+	\end{align*}
+	Simplifying the above formula (and using the fact that $ \neg (l_1 > u_1 \lor l_1 = u_1) \equiv l_1 < u_1 $), we get:
+	\begin{align*}
+		(l_1 < u_1 \land l_1 < u_2 \land l_2 < u_1 \land l_2 < u_2) \\
+		\lor \neg (l_1 < u_1 \land l_1 < u_2 \land l_2 < u_1 \land l_2 < u_2)
+	\end{align*}
+	which is a equivalent to the original formula. \\	
+	We can also see that the formula is a tautology of the form $ A \lor \neg A $, where $ A $ is $ l_1 < u_1 \land l_1 < u_2 \land l_2 < u_1 \land l_2 < u_2 $. \\
+	Hence, the formula simplifies to $ \top $. \\
+
+	Task 2: \\
+	Encoding the above formula in Z3 and using the Q.E tactic:
+	\begin{python}
+		from z3 import *
+
+l1 = Real("l1")
+l2 = Real("l2")
+u1 = Real("u1")
+u2 = Real("u2")
+w = Real("w")
+z = Real("z")
+
+goal = Goal()
+goal.add(
+    ForAll(
+        [z],
+        Implies(
+            And(l1 < z, z < u1, l2 < z, z < u2),
+            Exists([w], And(l1 < w, w < u1, l2 < w, w < u2, w != z)),
+        ),
+    )
+)
+
+tactic = Tactic("qe")
+result = tactic(goal)
+print(result)
+	\end{python}
+	The output of the above code is:
+	\begin{python}
+[[]]
+	\end{python}
+	The above program can be found at the following public URL: \\
+	\link{https://github.com/adharshkamath/logic-hw-3/blob/main/p2\_a.py}
+
+	\textbf{(b)} \\
+	Task 1: \\
+	Let us name the vertices of the given graph as $ A, B, C, D $ where A is the topmost vertex and D is the bottommost vertex.
+	C is the vertex on the left and B is the vertex on the right. \\
+	The following vertices are connected by an edge: A and B, A and C, B and D, C and D. \\
+	Let us represent each vertex as an interval, using $ (l_{A}, u_{A}) $ ($ l_{A} < u_{B} $) to represent vertex A, and so on. \\
+	If G is an interval graph, for two intervals $ (l_{A}, u_{A}) $ and $ (l_{B}, u_{B}) $ to be connected by an edge
+	there must exist a $ z \in \mathbb{R} $ such that $ l_{A} < z < u_{A} $ and $ l_{B} < z < u_{B} $. \\
+	Written as a formula, this is:
+	\begin{align*}
+		\exists z. (l_{A} < z \land z < u_{A}) \land (l_{B} < z \land z < u_{B})
+	\end{align*}
+	For the given graph, the conjunction of the following formulae must be true (for it to be an interval graph):
+	\begin{align*}
+		\exists z. (l_{A} < z \land z < u_{A}) \land (l_{B} < z \land z < u_{B}) \\
+		\land \exists z_1. (l_{A} < z_1 \land z_1 < u_{A}) \land (l_{C} < z_1 \land z_1 < u_{C}) \\
+		\land \exists z_2. (l_{B} < z_2 \land z_2 < u_{B}) \land (l_{D} < z_2 \land z_2 < u_{D}) \\
+		\land \exists z_3. (l_{C} < z_3 \land z_3 < u_{C}) \land (l_{D} < z_3 \land z_3 < u_{D})
+	\end{align*}
+	Each existential formula represents an edge in the graph. \\
+	We also need to ensure that if two vertices are not connected by an edge, then their intervals do not intersect. \\
+	We can state the above as:
+	\begin{align*}
+		\neg (\exists z. (l_{A} < z \land z < u_{A}) \land (l_{D} < z \land z < u_{D})) \\
+		\land \neg (\exists z. (l_{B} < z \land z < u_{B}) \land (l_{C} < z \land z < u_{C}))
+	\end{align*}
+	Combining the above formulae, we get the required formula:
+	\begin{align*}
+		\alpha_G = \exists z. (l_{A} < z \land z < u_{A}) \land (l_{B} < z \land z < u_{B}) \\
+		\land \exists z_1. (l_{A} < z_1 \land z_1 < u_{A}) \land (l_{C} < z_1 \land z_1 < u_{C}) \\
+		\land \exists z_2. (l_{B} < z_2 \land z_2 < u_{B}) \land (l_{D} < z_2 \land z_2 < u_{D}) \\
+		\land \exists z_3. (l_{C} < z_3 \land z_3 < u_{C}) \land (l_{D} < z_3 \land z_3 < u_{D}) \\
+		\land \neg (\exists z_4. (l_{A} < z_4 \land z_4 < u_{A}) \land (l_{D} < z_4 \land z_4 < u_{D})) \\
+		\land \neg (\exists z_5. (l_{B} < z_5 \land z_5 < u_{B}) \land (l_{C} < z_5 \land z_5 < u_{C}))
+	\end{align*}
+
+	Performing Q.E on the first conjunct, we get:
+	\begin{align*}
+		\exists z. (l_{A} < z \land z < u_{A}) \land (l_{B} < z \land z < u_{B}) \\
+		= (l_{A} < u_{A} \land l_{B} < u_{A} \land l_{A} < u_{B} \land l_{B} < u_{B})
+	\end{align*}
+	Similarly, performing Q.E on the remaining conjuncts, and combining all the results, we get:
+	\begin{align*}
+		\alpha_G = (l_{A} < u_{A} \land l_{B} < u_{A} \land l_{A} < u_{B} \land l_{B} < u_{B}) \\
+		\land (l_{A} < u_{A} \land l_{C} < u_{A} \land l_{A} < u_{C} \land l_{C} < u_{C}) \\
+		\land (l_{B} < u_{B} \land l_{D} < u_{B} \land l_{B} < u_{D} \land l_{D} < u_{D}) \\
+		\land (l_{C} < u_{C} \land l_{D} < u_{C} \land l_{C} < u_{D} \land l_{D} < u_{D}) \\
+		\land \neg (l_{A} < u_{A} \land l_{D} < u_{A} \land l_{A} < u_{D} \land l_{D} < u_{D}) \\
+		\land \neg (l_{B} < u_{B} \land l_{C} < u_{B} \land l_{B} < u_{C} \land l_{C} < u_{C})
+	\end{align*}
+	which is a quantifier free formula. \\
+	
+	Task 2: \\
+	Encoding the above formula, $\alpha_G$, in Z3:
+	\begin{python}
+from z3 import *
+
+la = Real("la")
+ua = Real("ua")
+lb = Real("lb")
+ub = Real("ub")
+lc = Real("lc")
+uc = Real("uc")
+ld = Real("ld")
+ud = Real("ud")
+z = Real("z")
+z1 = Real("z1")
+z2 = Real("z2")
+z3 = Real("z3")
+z4 = Real("z4")
+z5 = Real("z5")
+
+s = Solver()
+s.add(
+	Not(
+		And(
+			Exists([z], And(la < z, z < ua, lb < z, z < ub)),
+			Exists([z1], And(la < z1, z1 < ua, lc < z1, z1 < uc)),
+			Exists([z2], And(ld < z2, z2 < ud, lb < z2, z2 < ub)),
+			Exists([z3], And(ld < z3, z3 < ud, lc < z3, z3 < uc)),
+			Not(Exists([z4], And(la < z4, z4 < ua, ld < z4, z4 < ud))),
+			Not(Exists([z5], And(lb < z5, z5 < ub, lc < z5, z5 < uc))),
+		)
+	)
+)
+print(s.check())
+	\end{python}
+	The output of the above code is:
+	\begin{python}
+sat
+	\end{python}
+	The negation of the given formula is satisfiable. Hence, the given formula is not valid. \\
+	The above program can be found at the following public URL: \\
+	\link{https://github.com/adharshkamath/logic-hw-3/blob/main/p2\_b.py}
+
+    {\rule{17cm}{0.4pt}}
+	\question[]
+	\solutiontitle
+
+	We are given the following formula over rationals with addition and less than symbols: \\
+	\begin{align*}
+		\psi \equiv \forall x. \exists y. ((2y > 3x) \land (4y < 8x + 10))
+	\end{align*}
+	Consider the inner formula that is quantified by $ \exists y $:
+	\begin{align*}
+		(2y > 3x) \land (4y < 8x + 10)
+	\end{align*}
+	We can rewrite the above formula as:
+	\begin{align*}
+		(y > \frac{3}{2}x) \land (y < \frac{8}{4}x + \frac{10}{4})
+	\end{align*}
+	Now we can define the sub-formulae in the Ferrante-Rackoff procedure:
+	\begin{align*}
+		\psi_1 = (\frac{3}{2}x + \frac{8}{4}x + \frac{10}{4}) / 2 > \frac{3}{2}x \land (\frac{3}{2}x + \frac{8}{4}x + \frac{10}{4}) / 2 < \frac{8}{4}x + \frac{10}{4} \\
+		\psi_2 = ((\frac{3}{2}x + \frac{3}{2}x) / 2 > \frac{3}{2}x) \land ((\frac{3}{2}x + \frac{3}{2}x) / 2) < \frac{8}{4}x + \frac{10}{4} \\
+		\psi_3 = ((\frac{8}{4}x + \frac{10}{4}) + (\frac{8}{4}x + \frac{10}{4})) / 2 > \frac{3}{2}x \land ((\frac{8}{4}x + \frac{10}{4}) + (\frac{8}{4}x + \frac{10}{4})) / 2 < \frac{8}{4}x + \frac{10}{4}
+	\end{align*}
+	We also need to include the following:
+	\begin{align*}
+		\psi_{-\infty} = \bot \land \top \\
+		\psi_{+\infty} = \top \land \bot
+	\end{align*}
+	The final formula can be written as:
+	\begin{align*}
+		\psi' = \psi_1 \lor \psi_2 \lor \psi_3 \lor \psi_{-\infty} \lor \psi_{+\infty}
+	\end{align*}
+	But as we can see from above, $ \psi_{-\infty} $ and $\psi_{+\infty}$ and evaluate to $ \bot $. Hence, we can eliminate them from the formula. \\
+	Therefore, the formula can be written as:
+	\begin{align*}
+		\psi' = \psi_1 \lor \psi_2 \lor \psi_3
+		      = ((\frac{3}{2}x + \frac{8}{4}x + \frac{10}{4}) / 2 > \frac{3}{2}x \land (\frac{3}{2}x + \frac{8}{4}x + \frac{10}{4}) / 2 < \frac{8}{4}x + \frac{10}{4}) \\
+				\lor ((\frac{3}{2}x + \frac{3}{2}x) / 2 > \frac{3}{2}x \land (\frac{3}{2}x + \frac{3}{2}x) / 2 < \frac{8}{4}x + \frac{10}{4}) \\
+				\lor (((\frac{8}{4}x + \frac{10}{4}) + (\frac{8}{4}x + \frac{10}{4})) / 2 > \frac{3}{2}x \land ((\frac{8}{4}x + \frac{10}{4}) + (\frac{8}{4}x + \frac{10}{4})) / 2 < \frac{8}{4}x + \frac{10}{4})
+	\end{align*}
+	We can eliminate $ \psi_2 $ and $ \psi_3 $ since they cannot be satisfied (They contain a term of the form $ p > p $ or $ p < p $, where $ p $ is $\frac{3}{2}x$ or $\frac{8}{4}x + \frac{10}{4}$). \\ \\
+	Therefor, the formula without the $ \exists y $ quantifier can be written as:
+	\begin{align*}
+		\psi' = \psi_1
+		      = ((\frac{3}{2}x + \frac{8}{4}x + \frac{10}{4}) / 2 > \frac{3}{2}x \land (\frac{3}{2}x + \frac{8}{4}x + \frac{10}{4}) / 2 < \frac{8}{4}x + \frac{10}{4})
+	\end{align*}
+	Putting the above back into the original formula, we get:
+	\begin{align*}
+		\forall x. ((\frac{3}{2}x + \frac{8}{4}x + \frac{10}{4}) / 2 > \frac{3}{2}x \land (\frac{3}{2}x + \frac{8}{4}x + \frac{10}{4}) / 2 < \frac{8}{4}x + \frac{10}{4})
+	\end{align*}
+
+	Rewriting the above to contain terms of the form $ x < c $ and $ x > c $, we get:
+	\begin{align*}
+		\forall x. ((\frac{6}{4}x + \frac{8}{4}x + \frac{10}{4}) / 2 > \frac{3}{2}x) \land ((\frac{6}{4}x + \frac{8}{4}x + \frac{10}{4}) / 2 < \frac{8}{4}x + \frac{10}{4}) \\
+		= \forall x. ((\frac{6}{8}x + \frac{8}{8}x + \frac{10}{8}) > \frac{3}{2}x) \land ((\frac{6}{8}x + \frac{8}{8}x + \frac{10}{8}) < \frac{8}{4}x + \frac{10}{4}) \\
+		= \forall x. ((\frac{10}{8} > \frac{3}{2}x - \frac{6}{8}x - \frac{8}{8}x) \land (\frac{10}{8} < \frac{8}{4}x + \frac{10}{4} - \frac{6}{8}x - \frac{8}{8}x)) \\
+		= \forall x. ((\frac{10}{8} > \frac{12}{8}x - \frac{6}{8}x - \frac{8}{8}x) \land (\frac{10}{8} < \frac{16}{8}x - \frac{6}{8}x - \frac{8}{8}x)) + \frac{10}{4} \\  
+		= \forall x. ((\frac{10}{8} > \frac{-2}{8}x) \land (\frac{10}{8} - \frac{10}{4} < \frac{2}{8}x)) \\
+		= \forall x. ((\frac{-10}{8} * \frac{8}{2} < x) \land (\frac{-10}{8} * \frac{8}{2} < x)) \\
+		= \forall x. (({20} < x) \land ({20} < x)) \\
+	\end{align*}
+	We have simplified the formula to:
+	\begin{align*}
+		\forall x. (20 < x)
+	\end{align*}
+	Rewriting the formula as an existential formula, we get:
+	\begin{align*}
+		\neg \exists x. \neg (20 < x)
+	\end{align*}
+	
+	Defining the sub-formulae in the Ferrante-Rackoff procedure:
+	\begin{align*}
+		\psi_1 = (20 < (20 + 20) / 2) \\
+		\psi_{-\infty} = \bot \\
+		\psi_{+\infty} = \top 
+	\end{align*}
+	The final formula:
+	\begin{align*}
+		\psi' = \psi_1 \lor \psi_{-\infty} \lor \psi_{+\infty}
+	\end{align*}
+	Substituting, we get:
+	\begin{align*}
+		\psi' = (20 < (20 + 20) / 2) \lor \bot \lor \top \\
+		= \top
+	\end{align*}
+	Bringing back the outermost negation, we get the simplified formula:
+	\begin{align*}
+		\neg \exists x. \neg ((20 > x) \land (20 < x)) = \neg (\top) = \bot
+	\end{align*}
+	Therefore, the given formula simplifies to $ \bot $. \\
+
+	Task 2: \\
+	Encoding the above formula in Z3:
+	\begin{python}
+from z3 import *
+
+x = Real("x")
+p = Int("p")
+q = Int("q")
+y = Real("y")
+m = Int("m")
+n = Int("n")
+s = Solver()
+
+s.add(q * x == p)
+s.add(n * y == m)
+s.add(Not(ForAll([x], Exists([y], And(2 * y > 3 * x, 4 * y < (8 * x + 10))))))
+print(s.check())
+	\end{python}
+	The output of the above code is:
+	\begin{python}
+unknown
+	\end{python}
+	Z3 is unable to determine the satisfiability of the negation of the given formula. So we cannot conclude if the given formula is valid or not. \\
+	The above program can be found at the following public URL: \\
+	\link{https://github.com/adharshkamath/logic-hw-3/blob/main/p3.py}
+
+
+	However, in a different program, invoking the Q.E tactic on the given formula, yields the output $ [[False]] $. Program: \\
+	\begin{python}
+from z3 import *
+
+x = Real("x")
+p = Int("p")
+q = Int("q")
+y = Real("y")
+m = Int("m")
+n = Int("n")
+s = Solver()
+
+g = Goal()
+g.add(q * x == p)
+g.add(n * y == m)
+g.add(ForAll([x], Exists([y], And(2 * y > 3 * x, 4 * y < (8 * x + 10)))))
+t = Tactic("qe")
+print(t(g))
+	\end{python}
+	The output of the above code is:
+	\begin{python}
+[[False]]
+	\end{python}
+
+	The above program can be found at the following public URL: \\
+	\link{https://github.com/adharshkamath/logic-hw-3/blob/main/p3\_co.py}
+
+    {\rule{17cm}{0.4pt}}
+
+\end{questions}
+\end{document}
