@@ -36,6 +36,25 @@
 \begin{questions}
 	\question[]
 	\solutiontitle
+	A group is defined as a set S, along with a binary operation $ \cdot : S \times S \rightarrow S $ such that
+	\begin{enumerate}
+		\item $\forall a \: \forall  b \: \forall c \: (a \cdot b) \cdot c = a \cdot (b \cdot c)$
+		\item $\exists e \: \forall a \: (e \cdot a) = (a \cdot e) = a$
+		\item $\forall a \: \exists b \: (a \cdot b) = (b \cdot a) = e$
+	\end{enumerate}
+
+	From these axioms, we can see that $ e $ is the identity element.
+
+	Task 1: Prove that under group axioms, there is no other identity.
+	\begin{align*}
+		\forall e \: \forall e' \: \forall a \: (((e \cdot a) = (a \cdot e) = a) \: \land ((e' \cdot a) = (a \cdot e') = a)) \implies e = e'
+	\end{align*}
+
+	Task 2: Prove that under group axioms, every element has only one inverse.
+	\begin{align*}
+		\forall a \: \forall b \: \forall b' \: (((a \cdot b) = (b \cdot a) = e) \: \land ((a \cdot b') = (b' \cdot a) = e)) \implies b = b'
+	\end{align*}
+
 	
 
     {\rule{17cm}{0.4pt}}
@@ -43,10 +62,23 @@
 	\question[]
 	\solutiontitle
 
+	The given formula $ \varphi $ is
+	\begin{align*}
+		\varphi = y \le x \land x \le y \land f(y) = f(7) \land x \le 5
+	\end{align*}
+
+
     {\rule{17cm}{0.4pt}}
 
 	\question[]
 	\solutiontitle
+
+	(a) \\
+	Given $ f: 2^{\natural} \rightarrow 2^{\natural} $ that is defined as 
+	\begin{align*}
+		f(S) = \{2\} \cup \{y | y = 2x, x \in S\}
+	\end{align*}
+
 
     {\rule{17cm}{0.4pt}}
 
