@@ -36,24 +36,108 @@
 \begin{questions}
 	\question[]
 	\solutiontitle
-	A group is defined as a set S, along with a binary operation $ \cdot : S \times S \rightarrow S $ such that
+	A group is defined as a set S, along with a binary operation $ \cdot : S \times S \rightarrow S $ and axioms:
 	\begin{enumerate}
-		\item $\forall a \: \forall  b \: \forall c \: (a \cdot b) \cdot c = a \cdot (b \cdot c)$
-		\item $\exists e \: \forall a \: (e \cdot a) = (a \cdot e) = a$
-		\item $\forall a \: \exists b \: (a \cdot b) = (b \cdot a) = e$
+		\item $\forall a \:,  b \:, c \:.\: (a \cdot b) \cdot c = a \cdot (b \cdot c)$
+		\item $\forall a \:.\: ((a \cdot e) = a \land (e \cdot a) = a) $
+		\item $\forall a \: \exists b \:.\: ((b \cdot a) = e \land (a \cdot b) = e)$
 	\end{enumerate}
 
-	From these axioms, we can see that $ e $ is the identity element.
+	where $ e $  is the special constant that is the identity element of the group.
 
-	Task 1: Prove that under group axioms, there is no other identity.
+	Task 1: 
 	\begin{align*}
-		\forall e \: \forall e' \: \forall a \: (((e \cdot a) = (a \cdot e) = a) \: \land ((e' \cdot a) = (a \cdot e') = a)) \implies e = e'
+		G : \: \forall e' \:.\: ((\forall a \:.\: ((e \cdot a) = a \: \land (e' \cdot a) = a)) \implies (e = e'))
 	\end{align*}
 
-	Task 2: Prove that under group axioms, every element has only one inverse.
+	The first two axioms are in prenex normal form, and do not contain any existential quantifiers.
+	Skolemizing the third axiom (by replacing $ \exists b $ with a function $ f(a) $), we get:
 	\begin{align*}
-		\forall a \: \forall b \: \forall b' \: (((a \cdot b) = (b \cdot a) = e) \: \land ((a \cdot b') = (b' \cdot a) = e)) \implies b = b'
+		\forall a \:.\: (a \cdot f(a)) = e \land (a \cdot f(a)) = e
 	\end{align*}
+
+	Simplifying the goal $G$, to prenex normal form:
+	\begin{align*}
+		\forall e' \: \forall a \:.\: ((a \cdot e') = a \: \land (e' \cdot a) = a) \implies (e = e') \\
+		\equiv \forall e' \: \neg(\forall a \:.\: ((a \cdot e') = a \: \land (e' \cdot a) = a)) \lor (e = e') \\
+		\equiv \forall e' \: (\exists a \:.\: \neg((a \cdot e') = a \: \land (e' \cdot a) = a)) \lor (e = e')
+	\end{align*}
+
+	To show the validity of the goal, we need to show that the negation of the goal is unsatisfiable along with all the axioms.
+
+	\begin{align*}
+		\neg G &\equiv \neg (\forall e' \: (\exists a \:.\: \neg((a \cdot e') = a \: \land (e' \cdot a) = a)) \lor (e = e')) \\
+		&\equiv \exists e' \: \neg (\exists a \:.\: \neg((a \cdot e') = a \: \land (e' \cdot a) = a)) \land \neg (e = e') \\
+		&\equiv \exists e' \: (\forall a \:.\: ((a \cdot e') = a \: \land (e' \cdot a) = a)) \land \neg (e = e')
+	\end{align*}
+
+	Skolemizing (with a constant $ e'' $ since $\exists e'$ is the outermost existential quantifier), we get:
+	\begin{align*}
+		\forall a \:.\: ((a \cdot e'') = a \: \land (e'' \cdot a) = a \land \neg (e = e''))
+	\end{align*}
+
+	Combining all the axioms, we have:
+	\begin{align*}
+		\forall a \:, b \:, c \:.\: (a \cdot b) \cdot c = a \cdot (b \cdot c) \\
+		\forall a \:.\: ((a \cdot e) = a \land (e \cdot a) = a) \\
+		\forall a \:.\: ((a \cdot f(a)) = e \land (f(a) \cdot a) = e) \\
+		\forall a \:.\: ((a \cdot e'') = a \: \land (e'' \cdot a) = a \land \neg (e = e''))
+	\end{align*}
+
+	Instantiating with depth-0 terms ($e, e''$), we get a large set of formulae:
+	\begin{align*}
+		(e \cdot e) \cdot e = e \cdot (e \cdot e) \\
+		(e \cdot e) \cdot e'' = e \cdot (e \cdot e'') \\
+		(e \cdot e'') \cdot e = e \cdot (e'' \cdot e) \\
+		(e \cdot e'') \cdot e'' = e \cdot (e'' \cdot e'') \\
+		(e'' \cdot e) \cdot e = e'' \cdot (e \cdot e) \\
+		(e'' \cdot e) \cdot e'' = e'' \cdot (e \cdot e'') \\
+		(e'' \cdot e'') \cdot e = e'' \cdot (e'' \cdot e) \\
+		(e'' \cdot e'') \cdot e'' = e'' \cdot (e'' \cdot e'') \\
+		(e \cdot e) = e \land (e \cdot e) = e \\
+		(e'' \cdot e) = e \land (e \cdot e'') = e \\
+		(e \cdot f(e)) = e \land (f(e) \cdot (e)) = e \\
+		(e'' \cdot f(e'')) = e \land (f(e'') \cdot (e'')) = e \\
+		(e \cdot e'') = e \land (e'' \cdot e) = e \land \neg (e = e'') \\
+		(e'' \cdot e'') = e'' \land (e'' \cdot e'') = e'' \land \neg (e = e'')
+	\end{align*}
+	
+	In this list,
+	we can find two conjuncts that are contradictory:
+	\begin{align*}
+		(e \cdot e'') = e'' \land (e'' \cdot e) = e'' \\
+		(e'' \cdot e) = e \land (e \cdot e'') = e \land \neg (e = e'')
+	\end{align*}
+	Hence, there exists no model that satisfies all the axioms and the negation of the goal. Therefore, the goal is valid.
+	
+
+	Task 2:
+	Given the skolemized set of axioms:
+	\begin{align*}
+		\forall a \:, b \:, c \:.\: (a \cdot b) \cdot c = a \cdot (b \cdot c) \\
+		\forall a \:.\: ((a \cdot e) = a \land (e \cdot a) = a) \\
+		\forall a \:.\: ((a \cdot f(a)) = e \land (a \cdot f(a)) = e) \\
+	\end{align*}
+	we can see that $f$ is the inverse function. We can simplify the goal to 
+	\begin{align*}
+		G : \: \forall a, b . (((a \cdot b = e) \land (b \cdot a = e)) \implies (b = f(a)) )
+	\end{align*}
+	Negating this goal gives us:
+	\begin{align*}
+		\neg G : \: \exists a, b . (((a \cdot b = e) \land (b \cdot a = e)) \land \neg(b = f(a)))
+	\end{align*}
+	Skolemizing (with constants $a', b'$) gives us:
+	\begin{align*}
+		((a' \cdot b' = e) \land (b' \cdot a' = e)) \land \neg(b' = f(a'))
+	\end{align*}
+
+	Instantiating the axioms with depth-0 terms ($a', b'$), we get a long list of formulae. In this list,
+	we can find a conjunct that contradicts the above formula:
+	\begin{align*}
+		((a' \cdot f(a')) = e \land (f(a') \cdot a') = e)
+	\end{align*}
+
+
 
 	
 
@@ -74,7 +158,7 @@
 	\solutiontitle
 
 	(a) \\
-	Given $ f: 2^{\natural} \rightarrow 2^{\natural} $ that is defined as 
+	Given $ f: 2^{N} \rightarrow 2^{N} $ that is defined as 
 	\begin{align*}
 		f(S) = \{2\} \cup \{y | y = 2x, x \in S\}
 	\end{align*}
