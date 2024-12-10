@@ -84,7 +84,7 @@
 		\forall a \:.\: ((a \cdot e'') = a \: \land (e'' \cdot a) = a \land \neg (e = e''))
 	\end{align*}
 
-	Instantiating with depth-0 terms ($e, e''$), we get a large set of formulae:
+	Instantiating with depth-0 terms ($e, e''$), we get a large set (conjunction) of formulae :
 	\begin{align*}
 		(e \cdot e) \cdot e = e \cdot (e \cdot e) \\
 		(e \cdot e) \cdot e'' = e \cdot (e \cdot e'') \\
@@ -112,7 +112,7 @@
 	Therefore, the goal $G$ is valid.
 
 	The corresponding Z3 program is at the following URL:
-	\link(https://tinyurl.comabcd)
+	\link{https://github.com/adharshkamath/logic-hw-4/blob/main/p1\_1.py} \\
 	
 
 	Task 2:
@@ -135,25 +135,108 @@
 		((a' \cdot b' = e) \land (b' \cdot a' = e)) \land \neg(b' = f(a'))
 	\end{align*}
 
-	Instantiating the axioms with depth-0 terms ($a', b'$), we get a long list of formulae. In this list,
-	we can find a conjunct that contradicts the above formula:
+	Instantiating the axioms with depth-0 terms ($a', b', e$), we get a long list (conjunction) of formulae:
 	\begin{align*}
-		((a' \cdot f(a')) = e \land (f(a') \cdot a') = e)
+		(a' \cdot a') \cdot a' = a' \cdot (a' \cdot a') \\
+		(a' \cdot a') \cdot b' = a' \cdot (a' \cdot b') \\
+		(a' \cdot b') \cdot a' = a' \cdot (b' \cdot a') \\
+		(a' \cdot b') \cdot b' = a' \cdot (b' \cdot b') \\
+		(b' \cdot a') \cdot a' = b' \cdot (a' \cdot a') \\
+		(b' \cdot a') \cdot b' = b' \cdot (a' \cdot b') \\
+		(b' \cdot b') \cdot a' = b' \cdot (b' \cdot a') \\
+		(b' \cdot b') \cdot b' = b' \cdot (b' \cdot b') \\ %
+		(a' \cdot a') \cdot e = a' \cdot (a' \cdot e) \\
+		(a' \cdot e) \cdot a' = a' \cdot (e \cdot a') \\
+		(a' \cdot e) \cdot e = a' \cdot (e \cdot e) \\
+		(e \cdot a') \cdot a' = e \cdot (a' \cdot a') \\
+		(e \cdot a') \cdot e = e \cdot (a' \cdot e) \\
+		(e \cdot e) \cdot a' = e \cdot (e \cdot a') \\
+		(e \cdot e) \cdot e = e \cdot (e \cdot e) \\  %
+		(b' \cdot b') \cdot e = b' \cdot (b' \cdot e) \\
+		(b' \cdot e) \cdot b' = b' \cdot (e \cdot b') \\
+		(b' \cdot e) \cdot e = b' \cdot (e \cdot e) \\
+		(e \cdot b') \cdot b' = e \cdot (b' \cdot b') \\
+		(e \cdot b') \cdot e = e \cdot (b' \cdot e) \\
+		(e \cdot e) \cdot b' = e \cdot (e \cdot b') \\ %
+		(a' \cdot b') \cdot e = a' \cdot (b' \cdot e) \\
+		(a' \cdot e) \cdot b' = a' \cdot (e \cdot b') \\
+		(e \cdot a') \cdot b' = e \cdot (a' \cdot b') \\
+		(e \cdot b') \cdot a' = e \cdot (b' \cdot a') \\
+		(b' \cdot a') \cdot e = b' \cdot (a' \cdot e) \\
+		(b' \cdot e) \cdot a' = b' \cdot (e \cdot a') \\ %
+		(a' \cdot e) = a' \land (e \cdot a') = a' \\
+		(b' \cdot e) = b' \land (e \cdot b') = b' \\
+		(e \cdot e) = e \land (e \cdot e) = e \\ %
+		(a' \cdot f(a')) = e \land (f(a') \cdot a') = e \\
+		(b' \cdot f(b')) = e \land (f(b') \cdot b') = e \\
+		(e \cdot f(e)) = e \land (f(e) \cdot e) = e
 	\end{align*}
 
+	In this list, we can find two conjuncts that are contradictory:
+	\begin{align*}
+		(a' \cdot f(a')) = e \land (f(a') \cdot a') = e \\
+		(b' \cdot f(b')) = e \land (f(b') \cdot b') = e
+	\end{align*}
 
+	The Z3 program for this task is at the following URL:
+	\link{https://github.com/adharshkamath/logic-hw-4/blob/main/p1\_pt2.py}
 
-	
 
     {\rule{17cm}{0.4pt}}
 
 	\question[]
 	\solutiontitle
 
-	The given formula $ \varphi $ is
+	(a) \\
+	The given formula $ \varphi $
 	\begin{align*}
 		\varphi = y \le x \land x \le y \land f(y) = f(7) \land x \le 5
 	\end{align*}
+	contains terms from $ T_{UIF} $ and $ T_{N} $ (theory of UIF and theory of natural numbers).
+
+	Replacing $ f(7) $ with $ f(w) $, and adding $ w= 7 $ as an additional formula, we get:
+	\begin{align*}
+		\varphi' = y \le x \land x \le y \land x \le 5 \land w = 7 \land f(y) = f(w) 
+	\end{align*} 
+
+	The part of the formula in $ \Sigma_{UIF} $ :
+	\begin{align*}
+		F_{UIF} : f(y) = f(w)
+	\end{align*}
+	and the part of the formula in $ \Sigma_{N} $ :
+	\begin{align*}
+		F_{N} : y \le x \land x \le y \land x \le 5 \land w = 7
+	\end{align*}
+
+	The conjunct $ F_{UIF} \land F_{N} $ is $(T_{UIF} \cup T_N)$-equisatisfiable to $ \varphi $.
+
+	(b) \\
+	The shared variables between $ F_{UIF} $ and $ F_{N} $ are:
+	\begin{align*}
+		V = \text{shared}(F_{UIF}, F_{N}) = \{y, w\}
+	\end{align*}
+
+	The two possible equivalence relations and their arrangements are:
+	\begin{align*}
+		E_1 = \{\{y\}, \{w\}\}, \quad \alpha_1(E_1, V) : y = w\\
+		E_2 = \{\{y, w\}\}, \quad \alpha_2(E_2, V) : y \neq w
+	\end{align*}
+
+	Simplifying $F_N$, we can write:
+	\begin{align*}
+		F_N = y \le x \land x \le y \land x \le 5 \land w = 7 \\
+			\equiv x = y \land x \le 5 \land w = 7
+	\end{align*}
+
+	We can see that $F_N$ is satisfiable over natural numbers only under the arrangement $\alpha_2$ (since $y \le 5$ and $w=7$).
+	A satisfying model for $F_N$ is:  $ \{x = 5, y = 5, w = 7\} $ \\
+
+	We can see that $F_{UIF}$ is satisfiable under this arrangement only if $f$ maps all arguments to a constant (since we need to satisfy
+	$ f(y) = f(w) \land y \neq w $).
+	A satisfying model for $F_{UIF}$ is: $ \{f(y) = c \} $ where $c$ is any arbitrary constant. \\
+
+	From the above, we can derive a model for the original formula $ \varphi $.
+	A satisfying model for $ \varphi $ is: $ \{x = 5, y = 5, f(t) = c \} $ where $t$ is any term in the combined domains.
 
 
     {\rule{17cm}{0.4pt}}
