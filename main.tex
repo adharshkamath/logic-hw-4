@@ -120,19 +120,19 @@
 	\begin{align*}
 		\forall a \:, b \:, c \:.\: (a \cdot b) \cdot c = a \cdot (b \cdot c) \\
 		\forall a \:.\: ((a \cdot e) = a \land (e \cdot a) = a) \\
-		\forall a \:.\: ((f(a)\cdot a) = e \land (a \cdot f(a))  \\ = e) \\
+		\forall a \:.\: ((f(a)\cdot a) = e \land (a \cdot f(a))  \\ = e)
 	\end{align*}
 	we can see that $f$ is the inverse function. 
 	We can formulate the required goal as:
 	\begin{align*}
 		G : \: \forall a, b, c . (((a \cdot b = e) \land (b \cdot a = e))  \\ \land (
-			(a \cdot c = e) \land (c \cdot a = e))  \\ \implies (b = c))  \\
+			(a \cdot c = e) \land (c \cdot a = e))  \\ \implies (b = c)) 
 	\end{align*}
 
 	Negating this goal and simplifying gives us:
 	\begin{align*}
 		\neg G : \: \exists a, b, c . (((a \cdot b = e) \land (b \cdot a = e))  \\ \land (
-			(a \cdot c = e) \land (c \cdot a = e))  \\ \land \neg(b = c))  \\
+			(a \cdot c = e) \land (c \cdot a = e))  \\ \land \neg(b = c)) 
 	\end{align*}
 
 	Skolemizing (with constants $a', b', c'$) gives us:
@@ -177,16 +177,16 @@
 		\varphi' = y \le x \land x \le y \land x \le 5 \land w = 7 \land f(y) = f(w) 
 	\end{align*} 
 
-	The part of the formula in $ T_{UIF} $ :
+	The part of the formula in $ T_{UIF} $ is:
 	\begin{align*}
 		F_{UIF} : f(y) = f(w)
 	\end{align*}
-	and the part of the formula in $ T_{N} $ :
+	and the part of the formula in $ T_{N} $ is:
 	\begin{align*}
 		F_{N} : y \le x \land x \le y \land x \le 5 \land w = 7
 	\end{align*}
 
-	The conjunct $ F_{UIF} \land F_{N} $ is $(T_{UIF} \cup T_N)$-equisatisfiable to $ \varphi $.
+	The formula $ F_{UIF} \land F_{N} $ is $(T_{UIF} \cup T_N)$-equisatisfiable to $ \varphi $. \\
 
 	(b) \\
 	The shared variables between $ F_{UIF} $ and $ F_{N} $ are:
@@ -206,7 +206,11 @@
 			\equiv x = y \land x \le 5 \land w = 7
 	\end{align*}
 
-	We can see that $F_N$ is satisfiable over natural numbers only under the arrangement $\alpha_2$ (since $y \le 5$ and $w=7$).
+	We can see that $F_N$ is satisfiable over natural numbers under the arrangement $\alpha_2$ (since $y \le 5$ and $w=7$).
+	The formula $F_{UIF}$ is also satisfiable under the same arrangement.
+
+	Therefore, the formula $ \varphi $ is satisfiable.
+
 	A satisfying model for $F_N$ is:  $ \{x = 5, y = 5, w = 7\} $ \\
 
 	We can see that $F_{UIF}$ is satisfiable under this arrangement if $f$ maps all natural numbers to a constant (since we need to satisfy
