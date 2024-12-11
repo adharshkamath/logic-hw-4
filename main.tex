@@ -47,41 +47,41 @@
 
 	Task 1: 
 	\begin{align*}
-		G : \: \forall e' \:.\: ((\forall a \:.\: ((e \cdot a) = a \: \land (e' \cdot a) = a)) \implies (e = e'))
+		G : \: \forall e' \:.\: ((\forall a \:.\: ((e \cdot a) = a \: \land (e' \cdot a) = a))  \\ \implies (e = e'))  \\
 	\end{align*}
 
 	The first two axioms are in prenex normal form, and do not contain any existential quantifiers.
 	Skolemizing the third axiom (by replacing $ \exists b $ with a function $ f(a) $), we get:
 	\begin{align*}
-		\forall a \:.\: (a \cdot f(a)) = e \land (a \cdot f(a)) = e
+		\forall a \:.\: (a \cdot f(a))  \\ = e \land (a \cdot f(a))  \\ = e
 	\end{align*}
 
 	Simplifying the goal $G$, to prenex normal form:
 	\begin{align*}
 		\forall e' \: \forall a \:.\: ((a \cdot e') = a \: \land (e' \cdot a) = a) \implies (e = e') \\
-		\equiv \forall e' \: \neg(\forall a \:.\: ((a \cdot e') = a \: \land (e' \cdot a) = a)) \lor (e = e') \\
-		\equiv \forall e' \: (\exists a \:.\: \neg((a \cdot e') = a \: \land (e' \cdot a) = a)) \lor (e = e')
+		\equiv \forall e' \: \neg(\forall a \:.\: ((a \cdot e') = a \: \land (e' \cdot a) = a))  \\ \lor (e = e') \\
+		\equiv \forall e' \: (\exists a \:.\: \neg((a \cdot e') = a \: \land (e' \cdot a) = a))  \\ \lor (e = e')
 	\end{align*}
 
 	To show the validity of the goal, we need to show that the negation of the goal is unsatisfiable along with all the axioms.
 
 	\begin{align*}
-		\neg G &\equiv \neg (\forall e' \: (\exists a \:.\: \neg((a \cdot e') = a \: \land (e' \cdot a) = a)) \lor (e = e')) \\
-		&\equiv \exists e' \: \neg (\exists a \:.\: \neg((a \cdot e') = a \: \land (e' \cdot a) = a)) \land \neg (e = e') \\
-		&\equiv \exists e' \: (\forall a \:.\: ((a \cdot e') = a \: \land (e' \cdot a) = a)) \land \neg (e = e')
+		\neg G &\equiv \neg (\forall e' \: (\exists a \:.\: \neg((a \cdot e') = a \: \land (e' \cdot a) = a))  \\ \lor (e = e'))  \\ \\
+		&\equiv \exists e' \: \neg (\exists a \:.\: \neg((a \cdot e') = a \: \land (e' \cdot a) = a))  \\ \land \neg (e = e') \\
+		&\equiv \exists e' \: (\forall a \:.\: ((a \cdot e') = a \: \land (e' \cdot a) = a))  \\ \land \neg (e = e')
 	\end{align*}
 
 	Skolemizing (with a constant $ e'' $ since $\exists e'$ is the outermost existential quantifier), we get:
 	\begin{align*}
-		\forall a \:.\: ((a \cdot e'') = a \: \land (e'' \cdot a) = a \land \neg (e = e''))
+		\forall a \:.\: ((a \cdot e'') = a \: \land (e'' \cdot a) = a \land \neg (e = e''))  \\
 	\end{align*}
 
 	Combining all the axioms, we have:
 	\begin{align*}
 		\forall a \:, b \:, c \:.\: (a \cdot b) \cdot c = a \cdot (b \cdot c) \\
 		\forall a \:.\: ((a \cdot e) = a \land (e \cdot a) = a) \\
-		\forall a \:.\: ((a \cdot f(a)) = e \land (f(a) \cdot a) = e) \\
-		\forall a \:.\: ((a \cdot e'') = a \: \land (e'' \cdot a) = a \land \neg (e = e''))
+		\forall a \:.\: ((a \cdot f(a))  \\ = e \land (f(a) \cdot a) = e) \\
+		\forall a \:.\: ((a \cdot e'') = a \: \land (e'' \cdot a) = a \land \neg (e = e''))  \\
 	\end{align*}
 
 	Instantiating with depth-0 terms ($e, e''$), we get a large set (conjunction) of formulae :
@@ -96,8 +96,8 @@
 		(e'' \cdot e'') \cdot e'' = e'' \cdot (e'' \cdot e'') \\
 		(e \cdot e) = e \land (e \cdot e) = e \\
 		(e'' \cdot e) = e \land (e \cdot e'') = e \\
-		(e \cdot f(e)) = e \land (f(e) \cdot (e)) = e \\
-		(e'' \cdot f(e'')) = e \land (f(e'') \cdot (e'')) = e \\
+		(e \cdot f(e))  \\ = e \land (f(e) \cdot (e))  \\ = e \\
+		(e'' \cdot f(e''))  \\ = e \land (f(e'') \cdot (e''))  \\ = e \\
 		(e \cdot e'') = e \land (e'' \cdot e) = e \land \neg (e = e'') \\
 		(e'' \cdot e'') = e'' \land (e'' \cdot e'') = e'' \land \neg (e = e'')
 	\end{align*}
@@ -120,67 +120,41 @@
 	\begin{align*}
 		\forall a \:, b \:, c \:.\: (a \cdot b) \cdot c = a \cdot (b \cdot c) \\
 		\forall a \:.\: ((a \cdot e) = a \land (e \cdot a) = a) \\
-		\forall a \:.\: ((f(a)\cdot a) = e \land (a \cdot f(a)) = e) \\
+		\forall a \:.\: ((f(a)\cdot a) = e \land (a \cdot f(a))  \\ = e) \\
 	\end{align*}
-	we can see that $f$ is the inverse function. We can simplify the goal to 
+	we can see that $f$ is the inverse function. 
+	We can formulate the required goal as:
 	\begin{align*}
-		G : \: \forall a, b . (((a \cdot b = e) \land (b \cdot a = e)) \implies (b = f(a)) )
-	\end{align*}
-	Negating this goal gives us:
-	\begin{align*}
-		\neg G : \: \exists a, b . (((a \cdot b = e) \land (b \cdot a = e)) \land \neg(b = f(a)))
-	\end{align*}
-	Skolemizing (with constants $a', b'$) gives us:
-	\begin{align*}
-		((a' \cdot b' = e) \land (b' \cdot a' = e)) \land \neg(b' = f(a'))
+		G : \: \forall a, b, c . (((a \cdot b = e) \land (b \cdot a = e))  \\ \land (
+			(a \cdot c = e) \land (c \cdot a = e))  \\ \implies (b = c))  \\
 	\end{align*}
 
-	Instantiating the axioms with depth-0 terms ($a', b', e$), we get a long list (conjunction) of formulae:
+	Negating this goal and simplifying gives us:
 	\begin{align*}
-		(a' \cdot a') \cdot a' = a' \cdot (a' \cdot a') \\
-		(a' \cdot a') \cdot b' = a' \cdot (a' \cdot b') \\
-		(a' \cdot b') \cdot a' = a' \cdot (b' \cdot a') \\
-		(a' \cdot b') \cdot b' = a' \cdot (b' \cdot b') \\
-		(b' \cdot a') \cdot a' = b' \cdot (a' \cdot a') \\
-		(b' \cdot a') \cdot b' = b' \cdot (a' \cdot b') \\
-		(b' \cdot b') \cdot a' = b' \cdot (b' \cdot a') \\
-		(b' \cdot b') \cdot b' = b' \cdot (b' \cdot b') \\ %
-		(a' \cdot a') \cdot e = a' \cdot (a' \cdot e) \\
-		(a' \cdot e) \cdot a' = a' \cdot (e \cdot a') \\
-		(a' \cdot e) \cdot e = a' \cdot (e \cdot e) \\
-		(e \cdot a') \cdot a' = e \cdot (a' \cdot a') \\
-		(e \cdot a') \cdot e = e \cdot (a' \cdot e) \\
-		(e \cdot e) \cdot a' = e \cdot (e \cdot a') \\
-		(e \cdot e) \cdot e = e \cdot (e \cdot e) \\  %
-		(b' \cdot b') \cdot e = b' \cdot (b' \cdot e) \\
-		(b' \cdot e) \cdot b' = b' \cdot (e \cdot b') \\
-		(b' \cdot e) \cdot e = b' \cdot (e \cdot e) \\
-		(e \cdot b') \cdot b' = e \cdot (b' \cdot b') \\
-		(e \cdot b') \cdot e = e \cdot (b' \cdot e) \\
-		(e \cdot e) \cdot b' = e \cdot (e \cdot b') \\ %
-		(a' \cdot b') \cdot e = a' \cdot (b' \cdot e) \\
-		(a' \cdot e) \cdot b' = a' \cdot (e \cdot b') \\
-		(e \cdot a') \cdot b' = e \cdot (a' \cdot b') \\
-		(e \cdot b') \cdot a' = e \cdot (b' \cdot a') \\
-		(b' \cdot a') \cdot e = b' \cdot (a' \cdot e) \\
-		(b' \cdot e) \cdot a' = b' \cdot (e \cdot a') \\ %
-		(a' \cdot e) = a' \land (e \cdot a') = a' \\
-		(b' \cdot e) = b' \land (e \cdot b') = b' \\
-		(e \cdot e) = e \land (e \cdot e) = e \\ %
-		(a' \cdot f(a')) = e \land (f(a') \cdot a') = e \\
-		(b' \cdot f(b')) = e \land (f(b') \cdot b') = e \\
-		(e \cdot f(e)) = e \land (f(e) \cdot e) = e
+		\neg G : \: \exists a, b, c . (((a \cdot b = e) \land (b \cdot a = e))  \\ \land (
+			(a \cdot c = e) \land (c \cdot a = e))  \\ \land \neg(b = c))  \\
 	\end{align*}
 
-	In this list, we can find two conjuncts that are contradictory:
+	Skolemizing (with constants $a', b', c'$) gives us:
 	\begin{align*}
-		(a' \cdot f(a')) = e \land (f(a') \cdot a') = e \\
-		(b' \cdot f(b')) = e \land (f(b') \cdot b') = e
+		((a' \cdot b' = e) \land (b' \cdot a' = e))  \\ \land (
+			(a' \cdot c' = e) \land (c' \cdot a' = e))  \\ \land \neg(b' = c')
 	\end{align*}
 
-	The Z3 program for this task is at the following URL:
+	Instantiating the axioms with depth-0 terms ($a', b', c', e$), we get a long list (conjunction) of formulae. The full list is at the end of the document.
+	Specifically, we can find four conjuncts that are not satisfiable together:
+	\begin{align*}
+		((b' \cdot a') \cdot c) == (b' \cdot (a' \cdot c))  \\ \\
+		(b' \cdot e) == b' \land (e \cdot b') == b' \\
+		(c' \cdot e) == c' \land (e \cdot c') == c' \\
+		(a' \cdot b') == e \land (b' \cdot a') == e \land (a' \cdot c') == e \land (c' \cdot a') == e \land \neg(b' = c')
+	\end{align*}
+
+	The Z3 program for this task is at the following URL: 
 	\link{https://github.com/adharshkamath/logic-hw-4/blob/main/p1\_pt2.py}
 
+	An alternate proof using the formulation given in the lecture notes is at the end of the document.
+	The alternate proof required using a depth-1 term for the instantiation of the axioms.
 
     {\rule{17cm}{0.4pt}}
 
@@ -309,6 +283,147 @@
 
 
     {\rule{17cm}{0.4pt}}
+
+	Complete list of quantifier instantiations for Task 2 (Alternate proof):
+	\begin{align*}
+		((a' \cdot a') \cdot a') = (a' \cdot (a' \cdot a'))  ,\\
+		((a' \cdot a') \cdot b') = (a' \cdot (a' \cdot b'))  ,
+		((a' \cdot b') \cdot a') = (a' \cdot (b' \cdot a'))  ,\\
+		((a' \cdot b') \cdot b') = (a' \cdot (b' \cdot b'))  ,
+		((b' \cdot a') \cdot a') = (b' \cdot (a' \cdot a'))  ,\\
+		((b' \cdot a') \cdot b') = (b' \cdot (a' \cdot b'))  ,
+		((b' \cdot b') \cdot a') = (b' \cdot (b' \cdot a'))  ,\\
+		((b' \cdot b') \cdot b') = (b' \cdot (b' \cdot b'))  ,
+		((a' \cdot a') \cdot e) = (a' \cdot (a' \cdot e))  ,\\
+		((a' \cdot e) \cdot a') = (a' \cdot (e \cdot a'))  ,
+		((a' \cdot e) \cdot e) = (a' \cdot (e \cdot e))  ,\\
+		((e \cdot a') \cdot a') = (e \cdot (a' \cdot a'))  ,
+		((e \cdot a') \cdot e) = (e \cdot (a' \cdot e))  ,\\
+		((e \cdot e) \cdot a') = (e \cdot (e \cdot a'))  ,
+		((e \cdot e) \cdot e) = (e \cdot (e \cdot e))  ,\\
+		((a' \cdot a') \cdot c') = (a' \cdot (a' \cdot c'))  ,
+		((a' \cdot c') \cdot a') = (a' \cdot (c' \cdot a'))  ,\\
+		((a' \cdot c') \cdot c') = (a' \cdot (c' \cdot c'))  ,
+		((c' \cdot a') \cdot a') = (c' \cdot (a' \cdot a'))  ,\\
+		((c' \cdot a') \cdot c') = (c' \cdot (a' \cdot c'))  ,
+		((c' \cdot c') \cdot a') = (c' \cdot (c' \cdot a'))  ,\\
+		((c' \cdot c') \cdot c') = (c' \cdot (c' \cdot c'))  ,
+		((b' \cdot b') \cdot c') = (b' \cdot (b' \cdot c'))  ,\\
+		((b' \cdot c') \cdot b') = (b' \cdot (c' \cdot b'))  ,
+		((b' \cdot c') \cdot c') = (b' \cdot (c' \cdot c'))  ,\\
+		((c' \cdot b') \cdot b') = (c' \cdot (b' \cdot b'))  ,
+		((c' \cdot b') \cdot c') = (c' \cdot (b' \cdot c'))  ,\\
+		((c' \cdot c') \cdot b') = (c' \cdot (c' \cdot b'))  ,
+		((b' \cdot b') \cdot e) = (b' \cdot (b' \cdot e))  ,\\
+		((b' \cdot e) \cdot b') = (b' \cdot (e \cdot b'))  ,
+		((b' \cdot e) \cdot e) = (b' \cdot (e \cdot e))  ,\\
+		((e \cdot b') \cdot b') = (e \cdot (b' \cdot b'))  ,
+		((e \cdot b') \cdot e) = (e \cdot (b' \cdot e))  ,\\
+		((e \cdot e) \cdot b') = (e \cdot (e \cdot b'))  ,
+		((c' \cdot c') \cdot e) = (c' \cdot (c' \cdot e))  ,\\
+		((c' \cdot e) \cdot c') = (c' \cdot (e \cdot c'))  ,
+		((c' \cdot e) \cdot e) = (c' \cdot (e \cdot e))  ,\\
+		((e \cdot c') \cdot c') = (e \cdot (c' \cdot c'))  ,
+		((e \cdot c') \cdot e) = (e \cdot (c' \cdot e))  ,\\
+		((e \cdot e) \cdot c') = (e \cdot (e \cdot c')) 
+	\end{align*}
+	
+	\begin{align*}
+		((a' \cdot b') \cdot e) = (a' \cdot (b' \cdot e))  ,\\
+		((a' \cdot e) \cdot b') = (a' \cdot (e \cdot b'))  ,
+		((e \cdot a') \cdot b') = (e \cdot (a' \cdot b'))  ,\\
+		((e \cdot b') \cdot a') = (e \cdot (b' \cdot a'))  ,
+		((b' \cdot a') \cdot e) = (b' \cdot (a' \cdot e))  ,\\
+		((b' \cdot e) \cdot a') = (b' \cdot (e \cdot a'))  ,
+		((a' \cdot b') \cdot c') = (a' \cdot (b' \cdot c')) \\
+		((a' \cdot c') \cdot b') = (a' \cdot (c' \cdot b'))  ,
+		((c' \cdot a') \cdot b') = (c' \cdot (a' \cdot b'))  ,\\
+		((c' \cdot b') \cdot a') = (c' \cdot (b' \cdot a'))  ,
+		((b' \cdot a') \cdot c') = (b' \cdot (a' \cdot c'))  ,\\
+		((b' \cdot c') \cdot a') = (b' \cdot (c' \cdot a'))  ,
+		((a' \cdot c') \cdot e) = (a' \cdot (c' \cdot e))  ,\\
+		((a' \cdot e) \cdot c') = (a' \cdot (e \cdot c'))  ,
+		((e \cdot a') \cdot c') = (e \cdot (a' \cdot c'))  ,\\
+		((e \cdot c') \cdot a') = (e \cdot (c' \cdot a'))  ,
+		((c' \cdot a') \cdot e) = (c' \cdot (a' \cdot e))  ,\\
+		((c' \cdot e) \cdot a') = (c' \cdot (e \cdot a'))  ,
+		((b' \cdot c') \cdot e) = (b' \cdot (c' \cdot e))  ,\\
+		((b' \cdot e) \cdot c') = (b' \cdot (e \cdot c'))  ,
+		((e \cdot b') \cdot c') = (e \cdot (b' \cdot c'))  ,\\
+		((e \cdot c') \cdot b') = (e \cdot (c' \cdot b'))  ,
+		((c' \cdot b') \cdot e) = (c' \cdot (b' \cdot e))  ,\\
+		((c' \cdot e) \cdot b') = (c' \cdot (e \cdot b'))  ,
+		(a' \cdot f(a') = e) \land (f(a') \cdot a' = e) \\
+		(b' \cdot f(b') = e) \land (f(b') \cdot b' = e) 
+		(c' \cdot f(c') = e) \land (f(c') \cdot c' = e) \\
+		(e \cdot f(e)) = e \land (f(e) \cdot e) = e 
+		(a' \cdot e) = a' \land (e \cdot a') = a' \\
+		(b' \cdot e) = b' \land (e \cdot b') = b' 
+		(c' \cdot e) = c' \land (e \cdot c') = c' \\
+		(e \cdot e) = e \land (e \cdot e) = e \\
+		(a' \cdot b') = e \land (b' \cdot a') = e \land (a' \cdot c') = e \land (c' \cdot a') = e \land \neg(b' = c')
+	\end{align*}
+
+
+	Solution for Task 2 (Alternate proof):
+
+	We can formulate the goal as 
+	\begin{align*}
+		G : \: \forall a, b . (((a \cdot b = e) \land (b \cdot a = e))  \\ \implies (b = f(a))  \\ )
+	\end{align*}
+	
+	Negating this goal gives us:
+	\begin{align*}
+		\neg G : \: \exists a, b . (((a \cdot b = e) \land (b \cdot a = e))  \\ \land \neg(b = f(a))  \\)
+	\end{align*}
+	Skolemizing (with constants $a', b'$) gives us:
+	\begin{align*}
+		((a' \cdot b' = e) \land (b' \cdot a' = e))  \\ \land \neg(b' = f(a'))  \\
+	\end{align*}
+
+	Instantiating the axioms with depth-0 terms ($a', b', e$), we get a long list (conjunction) of formulae:
+	\begin{align*}
+		(a' \cdot a') \cdot a' = a' \cdot (a' \cdot a') \\
+		(a' \cdot a') \cdot b' = a' \cdot (a' \cdot b') \\
+		(a' \cdot b') \cdot a' = a' \cdot (b' \cdot a') \\
+		(a' \cdot b') \cdot b' = a' \cdot (b' \cdot b') \\
+		(b' \cdot a') \cdot a' = b' \cdot (a' \cdot a') \\
+		(b' \cdot a') \cdot b' = b' \cdot (a' \cdot b') \\
+		(b' \cdot b') \cdot a' = b' \cdot (b' \cdot a') \\
+		(b' \cdot b') \cdot b' = b' \cdot (b' \cdot b') \\ %
+		(a' \cdot a') \cdot e = a' \cdot (a' \cdot e) \\
+		(a' \cdot e) \cdot a' = a' \cdot (e \cdot a') \\
+		(a' \cdot e) \cdot e = a' \cdot (e \cdot e) \\
+		(e \cdot a') \cdot a' = e \cdot (a' \cdot a') \\
+		(e \cdot a') \cdot e = e \cdot (a' \cdot e) \\
+		(e \cdot e) \cdot a' = e \cdot (e \cdot a') \\
+		(e \cdot e) \cdot e = e \cdot (e \cdot e) \\  %
+		(b' \cdot b') \cdot e = b' \cdot (b' \cdot e) \\
+		(b' \cdot e) \cdot b' = b' \cdot (e \cdot b') \\
+		(b' \cdot e) \cdot e = b' \cdot (e \cdot e) \\
+		(e \cdot b') \cdot b' = e \cdot (b' \cdot b') \\
+		(e \cdot b') \cdot e = e \cdot (b' \cdot e) \\
+		(e \cdot e) \cdot b' = e \cdot (e \cdot b') \\ %
+		(a' \cdot b') \cdot e = a' \cdot (b' \cdot e) \\
+		(a' \cdot e) \cdot b' = a' \cdot (e \cdot b') \\
+		(e \cdot a') \cdot b' = e \cdot (a' \cdot b') \\
+		(e \cdot b') \cdot a' = e \cdot (b' \cdot a') \\
+		(b' \cdot a') \cdot e = b' \cdot (a' \cdot e) \\
+		(b' \cdot e) \cdot a' = b' \cdot (e \cdot a') \\ %
+		(a' \cdot e) = a' \land (e \cdot a') = a' \\
+		(b' \cdot e) = b' \land (e \cdot b') = b' \\
+		(e \cdot e) = e \land (e \cdot e) = e \\ %
+		(a' \cdot f(a'))  \\ = e \land (f(a') \cdot a') = e \\
+		(b' \cdot f(b'))  \\ = e \land (f(b') \cdot b') = e \\
+		(e \cdot f(e))  \\ = e \land (f(e) \cdot e) = e
+	\end{align*}
+
+	In this list, we can find two conjuncts that are contradictory:
+	\begin{align*}
+		(a' \cdot f(a'))  \\ = e \land (f(a') \cdot a') = e \\
+		(b' \cdot f(b'))  \\ = e \land (f(b') \cdot b') = e
+	\end{align*}
+
 
 \end{questions}
 \end{document}

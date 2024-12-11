@@ -66,14 +66,12 @@ formulae = [
     f(f(e, c), a) == f(e, f(c, a)),
     f(f(c, a), e) == f(c, f(a, e)),
     f(f(c, e), a) == f(c, f(e, a)),
-    f(f(c, c), a) == f(c, f(c, a)),
 
     f(f(b, e), c) == f(b, f(e, c)),
     f(f(e, b), c) == f(e, f(b, c)),
     f(f(e, c), b) == f(e, f(c, b)),
     f(f(c, b), e) == f(c, f(b, e)),
     f(f(c, e), b) == f(c, f(e, b)),
-    f(f(c, c), b) == f(c, f(c, b)),
 
     f(f(a, b), e) == f(a, f(b, e)),
     f(f(a, e), b) == f(a, f(e, b)),
@@ -93,15 +91,15 @@ formulae = [
     And(f(e, g(e)) == e, f(g(e), e) == e),
     And(f(c, g(c)) == e, f(g(c), c) == e),
 
-    And(f(a, b) == e, f(b, a) == e, Not(b == g(a))),
+    And(f(a, b) == e, f(b, a) == e, f(a, c) == e, f(c, a) == e, Not(b == c)),
 ]
 
 
-# for f in formulae:
-#     solver.assert_and_track(f, str(f))
+for f in formulae:
+    solver.assert_and_track(f, str(f))
 
 
-solver.add(formulae)
+# solver.add(formulae)
 
 if solver.check() == sat:
     print(solver.model())
