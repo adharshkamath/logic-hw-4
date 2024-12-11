@@ -120,7 +120,7 @@
 	\begin{align*}
 		\forall a \:, b \:, c \:.\: (a \cdot b) \cdot c = a \cdot (b \cdot c) \\
 		\forall a \:.\: ((a \cdot e) = a \land (e \cdot a) = a) \\
-		\forall a \:.\: ((a \cdot f(a)) = e \land (a \cdot f(a)) = e) \\
+		\forall a \:.\: ((f(a)\cdot a) = e \land (a \cdot f(a)) = e) \\
 	\end{align*}
 	we can see that $f$ is the inverse function. We can simplify the goal to 
 	\begin{align*}
@@ -199,11 +199,11 @@
 		\varphi' = y \le x \land x \le y \land x \le 5 \land w = 7 \land f(y) = f(w) 
 	\end{align*} 
 
-	The part of the formula in $ \Sigma_{UIF} $ :
+	The part of the formula in $ T_{UIF} $ :
 	\begin{align*}
 		F_{UIF} : f(y) = f(w)
 	\end{align*}
-	and the part of the formula in $ \Sigma_{N} $ :
+	and the part of the formula in $ T_{N} $ :
 	\begin{align*}
 		F_{N} : y \le x \land x \le y \land x \le 5 \land w = 7
 	\end{align*}
@@ -231,13 +231,16 @@
 	We can see that $F_N$ is satisfiable over natural numbers only under the arrangement $\alpha_2$ (since $y \le 5$ and $w=7$).
 	A satisfying model for $F_N$ is:  $ \{x = 5, y = 5, w = 7\} $ \\
 
-	We can see that $F_{UIF}$ is satisfiable under this arrangement only if $f$ maps all arguments to a constant (since we need to satisfy
+	We can see that $F_{UIF}$ is satisfiable under this arrangement if $f$ maps all natural numbers to a constant (since we need to satisfy
 	$ f(y) = f(w) \land y \neq w $).
-	A satisfying model for $F_{UIF}$ is: $ \{f(y) = c \} $ where $c$ is any arbitrary constant. \\
+	A satisfying model for $F_{UIF}$ is: 
+	$ \{y = 5, w = 7, (f(t) = 0 \: \text{for any} \: t \in \mathbb{N})\} $.  \\
 
-	From the above, we can derive a model for the original formula $ \varphi $.
-	A satisfying model for $ \varphi $ is: $ \{x = 5, y = 5, f(t) = c \} $ where $t$ is any term in the combined domains.
+	From the above two models, we can derive a model for the original formula $ \varphi $.
+	Since $y$ is the only shared variable that is present in the original formula, we need to make sure the 
+	$y$ in the final model is consistent with above models we have found for the individual parts.
 
+	A satisfying model for $ \varphi $ is: $ \{x = 5, y = 5, (f(t) = 0 \: \text{for any} \: t \in \mathbb{N}) \} $.
 
     {\rule{17cm}{0.4pt}}
 
@@ -245,8 +248,64 @@
 	\solutiontitle
 
 	(a) \\
-	The given formula $ f $  is defined over $2^{N}$ which is unbounded.
-	Since $ f $ is monotone, there is no least fixed point for $ f $.
+	The following is the least fixed point of the given function $f$:
+	\begin{align*}
+		\text{lfp}(f) = \{0, 2, 4, ...\} = \{2n \:|\: n \in \mathbb{N}\}
+	\end{align*}
+
+	(b) \\
+	$f$ is monotonic, if $A \subseteq B$ implies $f(A) \subseteq f(B)$.
+
+	Consider two sets $A, B$ such that $A \subseteq B$.
+	If $x$ is an element of $f(A)$, then that means $x \in X$ and there exists a $c$ such that $c \in \mathbb{N}$, $c$ is prime and $cx \in A$.
+	Since $A \subseteq B$, $cx \in B$.
+	This means, $x \in f(B)$ (since $c$ is prime and $cx \in B$).
+
+	Therefore, $f(A) \subseteq f(B)$.
+
+	Using the iterative method:
+	\begin{align*}
+		X_0 &= \emptyset \\
+		X_1 &= f(X_0) = \{100\} \\
+		X_2 &= f(X_1) = \{ 100, 50, 20 \} \\
+		X_3 &= f(X_2) = \{ 100, 50, 20, 25, 10, 4 \} \\
+		X_4 &= f(X_3) = \{ 100, 50, 20, 25, 10, 4, 5, 2 \} \\
+		X_5 &= f(X_4) = \{ 100, 50, 20, 25, 10, 4, 5, 2 \} 
+	\end{align*}
+
+	We can see that $X_4 = X_5$, and hence the least fixed point is $ \{100, 50, 20, 25, 10, 4, 5, 2\} $.
+
+	(c) \\
+	Informally, $f$ "adds" 0 to a set, and removes 1 if it existed in the set.
+	An operator is monotonic, if $A \subseteq B$ implies $f(A) \subseteq f(B)$.
+	We can show monotonicity by that all elements of $f(A)$ are in $f(B)$ if all elements of $A$ are in $B$.
+
+	Consider $x$ such that $x \in f(A)$. This means, $x \in A \cup \{0\}$ and $x \neq 1$.
+	Consider the following cases for any such $x$:
+	\begin{enumerate}
+		\item $x \in A $: In this case, $x \in A$, and hence $x \in B$. Since we know $x \neq 1$ (because $x \in f(A)$), $x \in f(B)$.
+		\item $x = 0 \land x \notin A$ : In this case, $x \in f(B)$ since 0 is always added by $f$.
+	\end{enumerate}
+
+	Therefore, $A \subseteq B$ implies $f(A) \subseteq f(B)$.
+
+	The least fixed point of $f$ is $ \{0\} $. 
+
+	(d) \\
+
+	Informally, $f$ "adds" 1 to a set, adds the double of every input element to the set, and removes the odd numbers from the input set.
+	Consider sets $A, B$ such that $A \subseteq B$, and $x \in f(A)$.
+	Consider the following cases for any such $x$:
+	\begin{enumerate}
+		\item $x = 1$ : In this case, $x \in f(B)$ since 1 is always added by $f$.
+		\item $x = 2n, n \in A$ : In this case, $n \in B$, and hence $2n \in f(B)$. Therefore $x \in f(B)$.
+	\end{enumerate}
+	Note that $x$ cannot be an odd number (other than 1), since $f$ removes all odd numbers from the input set.
+	So the above cases are exhaustive.
+
+	Therefore, $A \subseteq B$ implies $f(A) \subseteq f(B)$.
+
+	The least fixed point of $f$ is $\{1\} \cup \{2x \: | \: x \in \mathbb{N}\}$
 
 
     {\rule{17cm}{0.4pt}}
