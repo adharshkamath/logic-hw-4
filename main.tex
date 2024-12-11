@@ -142,19 +142,23 @@
 	\end{align*}
 
 	Instantiating the axioms with depth-0 terms ($a', b', c', e$), we get a long list (conjunction) of formulae. The full list is at the end of the document.
-	Specifically, we can find four conjuncts that are not satisfiable together:
+	Specifically, we can find four formulae that are not satisfiable together:
 	\begin{align*}
-		((b' \cdot a') \cdot c) == (b' \cdot (a' \cdot c))  \\ \\
+		((b' \cdot a') \cdot c) == (b' \cdot (a' \cdot c))  \\
 		(b' \cdot e) == b' \land (e \cdot b') == b' \\
 		(c' \cdot e) == c' \land (e \cdot c') == c' \\
 		(a' \cdot b') == e \land (b' \cdot a') == e \land (a' \cdot c') == e \land (c' \cdot a') == e \land \neg(b' = c')
 	\end{align*}
+
+	Hence, there exists no model that can satisfy all the formulae.
+	Therefore, the goal $G$ is valid.
 
 	The Z3 program for this task is at the following URL: 
 	\link{https://github.com/adharshkamath/logic-hw-4/blob/main/p1\_pt2.py}
 
 	An alternate proof using the formulation given in the lecture notes is at the end of the document.
 	The alternate proof required using a depth-1 term for the instantiation of the axioms.
+	The Z3 program for the alternate proof is at the following URL: \link{https://github.com/adharshkamath/logic-hw-4/blob/main/p1\_pt\_alt.py}
 
     {\rule{17cm}{0.4pt}}
 
